@@ -1,0 +1,23 @@
+.taskItem--container {
+    margin-bottom: 16px;
+}
+
+.taskItem--header {
+    display: flex;
+    border: 1px solid #000;
+    padding: 16px;
+}
+
+.taskItem--header__title {
+    flex-grow: 8
+}
+
+.taskItem--header__button {
+    flex-grow: 4;
+}
+
+.taskItem--body {
+    padding: 20px;
+    border: 1px solid #000;
+    border-top: none;
+}

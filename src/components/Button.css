@@ -1,0 +1,12 @@
+.base--button {
+    color: #fff;
+    background: #3ca93c;
+    border-radius: 4px;
+    padding: 4px 8px;
+    text-align: center;
+}
+
+.base--button:hover {
+    opacity: 0.8;
+    cursor: pointer;
+}
