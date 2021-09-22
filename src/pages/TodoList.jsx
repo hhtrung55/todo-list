@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Button, Input, Modal } from "../components";
+import { Button, Input } from "../components";
 import TaskForm from "../components/TaskForm";
 import TaskList from "../components/TaskList";
 
@@ -20,7 +20,7 @@ export default function TodoList() {
   const [taskDueDate, setTaskDueDate] = useState(minDate);
   const [taskPriority, setTaskPriority] = useState(options[0]);
 
-  const onSubmit = () => {
+  const onAddTask = () => {
     if (!taskName) return alert("The name of task is required");
     const task = {
       id: new Date(taskDueDate).getTime(),
@@ -32,6 +32,7 @@ export default function TodoList() {
     };
     const newList = [task, ...tasks].sort((a, b) => a.id - b.id);
     setTasks(newList);
+    localStorage.setItem("list", JSON.stringify(newList));
     resetTask();
   };
 
@@ -82,7 +83,7 @@ export default function TodoList() {
 
   useEffect(() => {
     onFilter();
-  }, [tasks.length]);
+  }, [tasks.length, onFilter]);
 
   return (
     <div id="layout" className="d-flex d-column">
@@ -101,7 +102,7 @@ export default function TodoList() {
         />
         <br />
         <br />
-        <Button onClick={onSubmit} title="Add" />
+        <Button onClick={onAddTask} title="Add" />
       </section>
       <section className="todoList">
         <h2>Todo List</h2>

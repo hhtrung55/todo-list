@@ -38,13 +38,13 @@ export default function TaskList({
       setCheckedBoxes([...checkedBoxes, task.createdAt]);
     } else {
       const newCheckedBoxes = checkedBoxes.filter(
-        (task) => task.createdAt !== task.createdAt
+        (createdAt) => createdAt !== task.createdAt
       );
       setCheckedBoxes(newCheckedBoxes);
     }
   };
 
-  const handleBulkRemove = useCallback(() => {
+  const handleBulkRemove = () => {
     const isSure = window.confirm("Are you sure?");
     if (!isSure) return;
 
@@ -54,7 +54,7 @@ export default function TaskList({
     setTasks(newTasks);
     setCheckedBoxes([]);
     localStorage.setItem("list", newTasks);
-  }, [checkedBoxes.length, tasks]);
+  };
 
   useEffect(() => {
     if (!tasks.length) setSelectedTask({});
