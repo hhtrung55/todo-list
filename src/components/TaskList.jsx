@@ -3,7 +3,13 @@ import Button from "./Button";
 import TaskForm from "./TaskForm";
 import "./TaskList.css";
 
-export default function TaskList({ tasks, onRemove, updateTask }) {
+export default function TaskList({
+  tasks,
+  onRemove,
+  updateTask,
+  setTasks,
+  tasksOrigin,
+}) {
   const [selectedTask, setSelectedTask] = useState({});
   const [checkedBoxes, setCheckedBoxes] = useState([]);
 
@@ -37,7 +43,19 @@ export default function TaskList({ tasks, onRemove, updateTask }) {
       setCheckedBoxes(newCheckedBoxes);
     }
   };
-  
+
+  const handleBulkRemove = useCallback(() => {
+    const isSure = window.confirm("Are you sure?");
+    if (!isSure) return;
+
+    const newTasks = tasksOrigin.filter(
+      ({ createdAt }) => !checkedBoxes.includes(createdAt)
+    );
+    setTasks(newTasks);
+    setCheckedBoxes([]);
+    localStorage.setItem("list", newTasks);
+  }, [checkedBoxes.length, tasks]);
+
   useEffect(() => {
     if (!tasks.length) setSelectedTask({});
   }, [tasks.length]);
@@ -110,6 +128,24 @@ export default function TaskList({ tasks, onRemove, updateTask }) {
           </div>
         );
       })}
+      {checkedBoxes.length ? (
+        <div id="buck-action" className="d-flex">
+          <div className="buck--title" style={{ flexGrow: 4 }}>
+            Buck Action:
+          </div>
+          <Button
+            style={{ background: "blue", flexGrow: 1 }}
+            onClick={() => alert("success")}
+            title="Done"
+          />
+          &nbsp;
+          <Button
+            style={{ background: "red", flexGrow: 1 }}
+            onClick={handleBulkRemove}
+            title="Remove"
+          />
+        </div>
+      ) : null}
     </div>
   );
 }

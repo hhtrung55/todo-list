@@ -11,7 +11,7 @@ const getTasks = () => {
   return JSON.parse(localStorage.getItem("list") || "[]");
 };
 
-export default function TodoList(props) {
+export default function TodoList() {
   const [tasks, setTasks] = useState(getTasks);
   const [filteredTasks, setFilteredTasks] = useState(getTasks);
 
@@ -64,7 +64,7 @@ export default function TodoList(props) {
     });
     setTasks(newList);
     localStorage.setItem("list", JSON.stringify(newList));
-    alert('success')
+    alert("success");
   };
 
   const onFilter = useCallback(
@@ -78,12 +78,14 @@ export default function TodoList(props) {
     [tasks]
   );
 
+  const bulkTaskSelected = () => {};
+
   useEffect(() => {
     onFilter();
   }, [tasks.length]);
 
   return (
-    <div id="layout">
+    <div id="layout" className="d-flex d-column">
       <section className="newTask">
         <h2>New Task</h2>
         <br />
@@ -113,6 +115,9 @@ export default function TodoList(props) {
           tasks={filteredTasks}
           onRemove={removeTask}
           updateTask={updateTask}
+          bulkTaskSelected={bulkTaskSelected}
+          setTasks={setTasks}
+          tasksOrigin={tasks}
         />
       </section>
     </div>
